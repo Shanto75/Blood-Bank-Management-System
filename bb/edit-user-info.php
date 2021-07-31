@@ -24,7 +24,7 @@ if (!$conn) {
 if (isset($_GET['delete'])) {
     $sno = $_GET['delete'];
     $delete = true;
-    $sql = "DELETE FROM `donor-reg` WHERE `sno` = $sno";
+    $sql = "DELETE FROM `donor-reg` WHERE `email` = '$sno'";
     $result = mysqli_query($conn, $sql);
 }
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mobilenumber = $_POST['mobilenumberEdit'];
         $city = $_POST['cityEdit'];
         // Sql query to be executed
-        $sql = "UPDATE `donor-reg` SET `name` = '$name' , `email` = '$email', `birthday` = '$birthday', `bloodgroup` = '$bloodgroup', `gender` = '$gender', `mobilenumber` = '$mobilenumber', `city` = '$city'  WHERE `donor-reg`.`sno` = $sno";
+        $sql = "UPDATE `donor-reg` SET `name` = '$name' , `email` = '$email', `birthday` = '$birthday', `bloodgroup` = '$bloodgroup', `gender` = '$gender', `mobilenumber` = '$mobilenumber', `city` = '$city'  WHERE `donor-reg`.`email` = '$sno'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $update = true;
@@ -73,13 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Edit Modal -->
     <div class="modal fade mx-auto" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog bg-dark text-white" role="document">
+            <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center" id="editModalLabel">Edit Information</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="text-center">Edit Information</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="edit-user-info.php" method="post" class="item-center mx-5">
+                <form action="edit-user-info.php" method="post" class="item-center mx-5 bg-dark text-white">
                     <input type="hidden" name="snoEdit" id="snoEdit">
                     <div class="mb-3 col-md-6">
                         <label for="exampleInputName1" class="form-label"> Name</label>
@@ -132,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-danger">Save changes</button>
                     </div>
-                    <hr>
                 </form>
             </div>
         </div>
@@ -172,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ?>
 
     <div class="container mt-3">
-        <h1 class="text-center">Edit Donor Information</h1>
+        <h1 class="text-center">Your Details</h1>
         <hr>
         <div class="m-5">
             <table class="table table-dark table-striped table-hover text-center" id="table">
@@ -205,26 +204,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>" . $row['gender'] . "</td>
                             <td>" . $row['mobilenumber'] . "</td>
                             <td>" . $row['city'] . "</td>
-                            <td> <button class='edit btn btn-sm btn-danger' id=" . $row['sno'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d" . $row['sno'] . ">Delete</button>  </td>
+                            <td> <button class='edit btn btn-sm btn-danger' id=" . $row['email'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d". $row['email'] . ">Delete</button>  </td>
                             </tr>";
                         }
                     } else {
                         echo "No results";
                         $conn->close();
                     }
-
-                    //   while ($row = mysqli_fetch_assoc($result)) {
-                    //     echo " <tr>
-                    //                   <td>" . $row['name'] . "</td>
-                    //                   <td>" . $row['email'] . "</td>
-                    //                   <td>" . $row['birthday'] . "</td>
-                    //                   <td>" . $row['bloodgroup'] . "</td>
-                    //                   <td>" . $row['gender'] . "</td>
-                    //                   <td>" . $row['mobilenumber'] . "</td>
-                    //                   <td>" . $row['city'] . "</td>
-                    //                   <td> <button class='edit btn btn-sm btn-danger' id=" . $row['sno'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d" . $row['sno'] . ">Delete</button>  </td>
-                    //                   </tr>";
-                    //   }
                     ?>
                 </tbody>
             </table>
@@ -286,7 +272,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         deletes = document.getElementsByClassName('delete');
         Array.from(deletes).forEach((element) => {
             element.addEventListener("click", (e) => {
-                console.log("edit ");
+                console.log("edit");
                 sno = e.target.id.substr(1);
 
                 if (confirm("Are you sure you want to delete!")) {

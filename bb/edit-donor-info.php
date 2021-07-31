@@ -24,9 +24,11 @@ if (!$conn) {
 
 if (isset($_GET['delete'])) {
   $sno = $_GET['delete'];
-  $delete = true;
-  $sql = "DELETE FROM `donor-reg` WHERE `sno` = $sno";
+  $sql = "DELETE FROM `donor-reg` WHERE `email` = '$sno'";
   $result = mysqli_query($conn, $sql);
+  if ($result) {
+    $delete = true;
+  }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -41,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mobilenumber = $_POST['mobilenumberEdit'];
     $city = $_POST['cityEdit'];
     // Sql query to be executed
-    $sql = "UPDATE `donor-reg` SET `name` = '$name' , `email` = '$email', `birthday` = '$birthday', `bloodgroup` = '$bloodgroup', `gender` = '$gender', `mobilenumber` = '$mobilenumber', `city` = '$city'  WHERE `donor-reg`.`sno` = $sno";
+    $sql = "UPDATE `donor-reg` SET `name` = '$name' , `email` = '$email', `birthday` = '$birthday', `bloodgroup` = '$bloodgroup', `gender` = '$gender', `mobilenumber` = '$mobilenumber', `city` = '$city'  WHERE `donor-reg`.`email` = '$sno'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
       $update = true;
@@ -133,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-danger">Save changes</button>
           </div>
-          <hr>
         </form>
       </div>
     </div>
@@ -179,7 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <table class="table table-dark table-striped table-hover text-center" id="table">
         <thead>
           <tr>
-            <th scope="col">serial</th>
             <th scope="col">Name</th>
             <th scope="col">Email Address</th>
             <th scope="col">Birth Day</th>
@@ -193,11 +193,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <tbody>
           <?php
-          $sql = "SELECT * FROM `donor-reg` ORDER BY `sno`";
+          $sql = "SELECT * FROM `donor-reg` ORDER BY `name`";
           $result = mysqli_query($conn, $sql);
           while ($row = mysqli_fetch_assoc($result)) {
             echo " <tr>
-                          <td>" . $row['sno'] . "</td>
                           <td>" . $row['name'] . "</td>
                           <td>" . $row['email'] . "</td>
                           <td>" . $row['birthday'] . "</td>
@@ -205,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <td>" . $row['gender'] . "</td>
                           <td>" . $row['mobilenumber'] . "</td>
                           <td>" . $row['city'] . "</td>
-                          <td> <button class='edit btn btn-sm btn-danger' id=" . $row['sno'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d" . $row['sno'] . ">Delete</button>  </td>
+                          <td> <button class='edit btn btn-sm btn-danger' id=" . $row['email'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d" . $row['email'] . ">Delete</button>  </td>
                           </tr>";
           }
           ?>
@@ -242,13 +241,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       element.addEventListener("click", (e) => {
         console.log("edit");
         tr = e.target.parentNode.parentNode;
-        name = tr.getElementsByTagName("td")[1].innerText;
-        email = tr.getElementsByTagName("td")[2].innerText;
-        birthday = tr.getElementsByTagName("td")[3].innerText;
-        bloodgroup = tr.getElementsByTagName("td")[4].innerText;
-        gender = tr.getElementsByTagName("td")[5].innerText;
-        mobilenumber = tr.getElementsByTagName("td")[6].innerText;
-        city = tr.getElementsByTagName("td")[7].innerText;
+        name = tr.getElementsByTagName("td")[0].innerText;
+        email = tr.getElementsByTagName("td")[1].innerText;
+        birthday = tr.getElementsByTagName("td")[2].innerText;
+        bloodgroup = tr.getElementsByTagName("td")[3].innerText;
+        gender = tr.getElementsByTagName("td")[4].innerText;
+        mobilenumber = tr.getElementsByTagName("td")[5].innerText;
+        city = tr.getElementsByTagName("td")[6].innerText;
 
         console.log(name, email, birthday, bloodgroup, gender, mobilenumber, city);
 
@@ -269,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     deletes = document.getElementsByClassName('delete');
     Array.from(deletes).forEach((element) => {
       element.addEventListener("click", (e) => {
-        console.log("edit ");
+        console.log("edit");
         sno = e.target.id.substr(1);
 
         if (confirm("Are you sure you want to delete!")) {

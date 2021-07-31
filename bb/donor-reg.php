@@ -1,3 +1,85 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+  header("location: userlogin.php");
+  exit;
+}
+$Exists = false;
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "bbms";
+
+// Create a connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+// Die if connection was not successful
+if (!$conn) {
+  die("Sorry we failed to connect: " . mysqli_connect_error());
+} else {
+  if (!isset($_SESSION['admin'])) {
+    // Check whether this username exists
+    $find = $_SESSION['email'];
+    $existSql = "SELECT * FROM `donor-reg` WHERE email = '$find'";
+    $result = mysqli_query($conn, $existSql);
+    $numExistRows = mysqli_num_rows($result);
+
+    if ($numExistRows > 0) {
+      $Exists = "User Already Exists";
+    }
+  }
+}
+?>
+
+<?php
+$showAlert = false;
+$failed = false;
+$showError = false;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $birthday = $_POST['birthday'];
+  $bloodgroup = $_POST['bloodgroup'];
+  $mobilenumber = $_POST['mobilenumber'];
+  $city = $_POST['city'];
+  $gender = $_POST['gender'];
+
+  // Connecting to the Database
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $database = "bbms";
+
+  // Create a connection
+  $conn = mysqli_connect($servername, $username, $password, $database);
+  // Die if connection was not successful
+  if (!$conn) {
+    die("Sorry we failed to connect: " . mysqli_connect_error());
+  } else {
+
+    // Check whether this username exists
+    $existSql = "SELECT * FROM `donor-reg` WHERE email = '$email'";
+    $result = mysqli_query($conn, $existSql);
+    $numExistRows = mysqli_num_rows($result);
+
+    if ($numExistRows > 0) {
+      $showError = "User Already Exists";
+    } else {
+
+      $sql = "INSERT INTO `donor-reg` (`name`, `email`, `birthday`, `bloodgroup`, `gender`, `mobilenumber`, `city`) VALUES ('$name', '$email', '$birthday', '$bloodgroup', '$gender', '$mobilenumber', '$city')";
+      $result = mysqli_query($conn, $sql);
+
+      if ($result) {
+        $showAlert = true;
+      } else {
+        $failed = true;
+      }
+    }
+  }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -17,74 +99,56 @@
   <?php require 'navbar.php' ?>
 
   <?php
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $birthday = $_POST['birthday'];
-    $bloodgroup = $_POST['bloodgroup'];
-    $gender = $_POST['gender'];
-    $mobilenumber = $_POST['mobilenumber'];
-    $city = $_POST['city'];
-
-    // Connecting to the Database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "bbms";
-
-    // Create a connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-    // Die if connection was not successful
-    if (!$conn) {
-      die("Sorry we failed to connect: " . mysqli_connect_error());
-    } else {
-      // Submit these to a database
-      // Sql query to be executed 
-      $sql = "INSERT INTO `donor-reg` (`name`, `email`, `birthday`, `bloodgroup`, `gender`, `mobilenumber`, `city`) VALUES ('$name','$email','$birthday','$bloodgroup','$gender','$mobilenumber','$city')";
-      $result = mysqli_query($conn, $sql);
-
-      if ($result) {
-        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Success!</strong> Your entry has been submitted successfully!
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>';
-      } else {
-        // echo "The record was not inserted successfully because of this error ---> ". mysqli_error($conn);
-        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Error!</strong> not inserted successfully !!
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>';
-      }
-    }
+  if ($showAlert) {
+    echo ' <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!!</strong> Donor Regestration is successfully done.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> ';
+  }
+  if ($failed) {
+    echo ' <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!!</strong> Donor Regestration failed.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> ';
+  }
+  if ($showError) {
+    echo ' <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!!</strong> ' . $showError . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> ';
   }
   ?>
 
+  <?php
+  if (!$Exists) {
+    echo '
   <div class="container mt-5 p-5 ">
     <h1 class="text-center">Donor Regestration Form</h1>
-    <form action="donor-reg.php" method="post" class="item-center">
+    <form class="center" action="donor-reg.php" method="post">
       <div class="mb-3 col-md-6">
         <label for="exampleInputName1" class="form-label">Name</label>
-        <input type="text" class="form-control" name="name" id="exampleInputName1">
+        <input type="text" class="form-control" name="name" id="name">
       </div>
       <hr>
       <div class="mb-3 col-md-6">
         <label for="exampleInputEmail1" class="form-label">Email Address</label>
-        <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
       </div>
       <hr>
       <div class="mb-3 col-md-6">
         <label for="exampleInputDate1" class="form-label">Birth Day</label>
-        <input type="date" class="form-control" name="birthday" id="exampleInputDate1">
+        <input type="date" class="form-control" name="birthday" id="birthday">
       </div>
       <hr>
       <div class="mb-3 col-md-6">
         <label for="exampleInputDate1" class="form-label">Blood Group</label>
-        <select name="bloodgroup" class="form-select" aria-label="Default select example">
+        <select name="bloodgroup" id="bloodgroup" class="form-select" aria-label="Default select example">
           <option value="A+" selected>A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -119,8 +183,13 @@
       </div>
       <hr>
     </form>
-  </div>
-
+  </div>';
+  } else {
+    echo '<div class="text-center alert alert-danger" role="alert">
+    You have already registered ! <a href="edit-user-info.php" class="alert-link">Click hear to see your details.</a>
+  </div>';
+  }
+  ?>
 
 
   <!-- Optional JavaScript; choose one of the two! -->
