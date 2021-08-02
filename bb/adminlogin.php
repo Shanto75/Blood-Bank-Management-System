@@ -2,42 +2,42 @@
 session_start();
 $error = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Connecting to the Database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "bbms";
+  // Connecting to the Database
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $database = "bbms";
 
-    // Create a connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-    // Die if connection was not successful
-    if (!$conn) {
-        die("Sorry we failed to connect: " . mysqli_connect_error());
-    } else {
+  // Create a connection
+  $conn = mysqli_connect($servername, $username, $password, $database);
+  // Die if connection was not successful
+  if (!$conn) {
+    die("Sorry we failed to connect: " . mysqli_connect_error());
+  } else {
 
-        $email = $_POST['email'];
-        $pass = $_POST['pass'];
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
 
-        $sql = "Select * from admin where email='$email'";
-        $result = mysqli_query($conn, $sql);
-        $num = mysqli_num_rows($result);
-        if ($num == 1) {
-            while ($row = mysqli_fetch_assoc($result)) {
+    $sql = "Select * from admin where email='$email'";
+    $result = mysqli_query($conn, $sql);
+    $num = mysqli_num_rows($result);
+    if ($num == 1) {
+      while ($row = mysqli_fetch_assoc($result)) {
 
-                if (password_verify($pass, $row['pass'])) {
-                    session_start();
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['admin'] = 'admin';
-                    $_SESSION['email'] = $email;
-                    header("location: admin.php");
-                } else {
-                    $error = "Invalid Input";
-                }
-            }
+        if (password_verify($pass, $row['pass'])) {
+          session_start();
+          $_SESSION['loggedin'] = true;
+          $_SESSION['admin'] = 'admin';
+          $_SESSION['email'] = $email;
+          header("location: admin.php");
         } else {
-            $error = "Invalid Input";
+          $error = "Invalid Input";
         }
+      }
+    } else {
+      $error = "Invalid Input";
     }
+  }
 }
 ?>
 
@@ -79,9 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="exampleInputEmail1" class="form-label">Email Address</label>
         <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
       </div>
-      <div class="mb-3 col-md-6">
+      <div class="mb-5 col-md-6">
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input type="password" class="form-control" name="pass" id="exampleInputPassword1">
+      </div>
+      <div class="mb-3 col-md-4 text-center alert alert-danger" role="alert">
+        Forgot your password? <a href="changepass.php" class="alert-link">Click hear to change.</a>
       </div>
       <button type="submit" class="py-3 mt-4 px-5 btn btn-outline-danger">Submit</button>
     </form>
