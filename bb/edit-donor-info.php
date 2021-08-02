@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <!-- Edit Modal -->
   <div class="modal fade mx-auto" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <div class="modal-dialog bg-dark text-white" role="document">
+      <div class="modal-content bg-dark text-white">
         <div class="modal-header">
           <h5 class="modal-title text-center" id="editModalLabel">Edit Information</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

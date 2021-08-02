@@ -46,10 +46,9 @@ if (!$conn) {
       <table class="table table-dark table-striped table-hover text-center" id="table">
         <thead>
           <tr>
-            <th scope="col">serial</th>
             <th scope="col">Name</th>
             <th scope="col">Email Address</th>
-            <th scope="col">Birth Day</th>
+            <th scope="col">Age</th>
             <th scope="col">Blood Group</th>
             <th scope="col">Gender</th>
             <th scope="col">Mobile Number</th>
@@ -59,14 +58,18 @@ if (!$conn) {
 
         <tbody>
           <?php
-          $sql = "SELECT * FROM `donor-reg` ORDER BY `sno`";
+          $sql = "SELECT * FROM `donor-reg` ORDER BY `name`";
           $result = mysqli_query($conn, $sql);
           while ($row = mysqli_fetch_assoc($result)) {
+
+            $dateOfBirth = $row['birthday'];
+            $today = date("Y-m-d");
+            $diff = date_diff(date_create($dateOfBirth), date_create($today));
+
             echo " <tr>
-                        <td>" . $row['sno'] . "</td>
                         <td>" . $row['name'] . "</td>
                         <td>" . $row['email'] . "</td>
-                        <td>" . $row['birthday'] . "</td>
+                        <td>" . $diff->format('%y') . "</td>
                         <td>" . $row['bloodgroup'] . "</td>
                         <td>" . $row['gender'] . "</td>
                         <td>" . $row['mobilenumber'] . "</td>

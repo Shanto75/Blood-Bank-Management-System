@@ -5,6 +5,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
   header("location: userlogin.php");
   exit;
 }
+
 $Exists = false;
 $servername = "localhost";
 $username = "root";
@@ -17,7 +18,7 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 if (!$conn) {
   die("Sorry we failed to connect: " . mysqli_connect_error());
 } else {
-  if (!isset($_SESSION['admin'])) {
+  if (isset($_SESSION['user'])) {
     // Check whether this username exists
     $find = $_SESSION['email'];
     $existSql = "SELECT * FROM `donor-reg` WHERE email = '$find'";
@@ -126,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   ?>
 
   <?php
-  if (!$Exists) {
+  if (!$Exists || isset($_SESSION['admin'])) {
     echo '
   <div class="container mt-5 p-5 ">
     <h1 class="text-center">Donor Regestration Form</h1>

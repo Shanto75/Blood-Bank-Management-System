@@ -51,6 +51,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
           <a type="submit" name="submit" value="FindDonor" class=" btn btn-outline-danger px-5 py-5" href="donor-list.php">User List</a>
         </div>
       </div>
+      <div class="col">
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-outline-danger px-5 py-5" href="addadmin.php">Add New Admin</a>
+        </div>
+      </div>
     </div>
     <hr>
   </div>
