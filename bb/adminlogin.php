@@ -1,5 +1,7 @@
 <?php
 session_start();
+unset($_SESSION['ucp']);
+$_SESSION['acp'] = 'acp';
 $error = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Connecting to the Database

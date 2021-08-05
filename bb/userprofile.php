@@ -19,36 +19,38 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <title>User Profile</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
 
   <?php require 'navbar.php' ?>
 
-  <div class="container mt-3">
-    <h1 class="text-center">User Profile</h1>
-    <h2 class="text-center">logged-in as <?php echo $_SESSION['email'] ?></h2>
-    <hr>
-    <form action="userprofile.php" method="post">
-      <div class="row">
-        <div class="col">
-          <div class="m-5">
-            <a type="submit" name="submit" value="donorlist" class=" btn btn-outline-danger px-5 py-5" href="donor-list.php">Donor List</a>
-          </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-6 col-lg-4 bg-warning">
+        <div class="m-5">
+          <a type="submit" name="submit" value="donorlist" class=" btn btn-dark px-5 mx-5" href="donor-list.php">Donor List</a>
         </div>
-        <div class="col">
-          <div class="m-5">
-            <a type="submit" name="submit" value="FindDonor" class=" btn btn-outline-danger px-5 py-5" href="donor-reg.php">Become a Donor</a>
-          </div>
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="donor-reg.php">Become a Donor</a>
         </div>
-        <div class="col">
-          <div class="m-5">
-            <a type="submit" name="submit" value="FindDonor" class=" btn btn-outline-danger px-5 py-5" href="edit-user-info.php">Your Information</a>
-          </div>
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Your Information</a>
+        </div>
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Find Donor</a>
+        </div>
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Blood Stock</a>
         </div>
       </div>
-    </form>
+      <div class="col-sm-9 col-md-6 col-lg-8 bg-success">
+        <h1 class="text-center">User Profile</h1>
+        <h2 class="text-center">logged-in as <?php echo $_SESSION['email'] ?></h2>
+        <hr>
+      </div>
+    </div>
   </div>
 
   <!-- Optional JavaScript; choose one of the two! -->

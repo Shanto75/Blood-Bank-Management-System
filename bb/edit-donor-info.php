@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="modal-dialog bg-dark text-white" role="document">
       <div class="modal-content bg-dark text-white">
         <div class="modal-header">
-          <h5 class="modal-title text-center" id="editModalLabel">Edit Information</h5>
+          <h5 class="modal-title text-center" id="editModalLabel">Edit Donor Information</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="edit-donor-info.php" method="post" class="item-center mx-5">

@@ -21,7 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button2'])) {
         $email = $_SESSION['email'];
         $pass = $_POST['pass'];
         $hash = password_hash($pass, PASSWORD_DEFAULT);
-        $sql = "UPDATE admin SET pass = '$hash' WHERE admin.email = '$email'";
+
+        if (isset($_SESSION['acp']))
+        {
+            $sql = "UPDATE admin SET pass = '$hash' WHERE admin.email = '$email'";
+        }
+        if (isset($_SESSION['ucp']))
+        {
+            $sql = "UPDATE user SET pass = '$hash' WHERE user.email = '$email'";
+        }
+
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $showAlert = true;
@@ -35,7 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
         die("Sorry we failed to connect: " . mysqli_connect_error());
     } else {
         $email = $_POST['email'];
-        $sql = "Select * from admin where email='$email'";
+
+        if (isset($_SESSION['acp']))
+        {
+            $sql = "Select * from admin where email='$email'";
+        }
+        if (isset($_SESSION['ucp']))
+        {
+            $sql = "Select * from user where email='$email'";
+        }
+
         $result = mysqli_query($conn, $sql);
         $num = mysqli_num_rows($result);
         if ($num == 1) {
