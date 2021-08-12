@@ -67,14 +67,14 @@ if (!$conn) {
             $diff = date_diff(date_create($dateOfBirth), date_create($today));
 
             echo " <tr>
-                        <td>" . $row['name'] . "</td>
-                        <td>" . $row['email'] . "</td>
-                        <td>" . $diff->format('%y') . "</td>
-                        <td>" . $row['bloodgroup'] . "</td>
-                        <td>" . $row['gender'] . "</td>
-                        <td>" . $row['mobilenumber'] . "</td>
-                        <td>" . $row['city'] . "</td>
-                        </tr>";
+            <td>" . $row['name'] . "</td>
+            <td>" . $row['email'] . "</td>
+            <td>" . $diff->format('%y') . "</td>
+            <td>" . $row['bloodgroup'] . "</td>
+            <td>" . $row['gender'] . "</td>
+            <td>" . $row['mobilenumber'] . "</td>
+            <td>" . $row['city'] . "</td>
+            </tr>";
           }
           ?>
         </tbody>

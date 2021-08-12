@@ -39,10 +39,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
           <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Your Information</a>
         </div>
         <div class="m-5">
-          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Find Donor</a>
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="bloodstock.php">Blood Stock</a>
         </div>
         <div class="m-5">
-          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-user-info.php">Blood Stock</a>
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="booking.php">Booking</a>
+        </div>
+        <div class="m-5">
+          <a type="submit" name="submit" value="FindDonor" class=" btn btn-dark px-5 mx-5" href="edit-booking.php">Edit Booking</a>
         </div>
       </div>
       <div class="col-sm-9 col-md-6 col-lg-8 bg-success">

@@ -28,7 +28,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3 col-md-6 col-lg-4 bg-warning">
+      <div class="col-sm-6 col-md-6 col-lg-8 bg-warning ">
         <div class="m-5">
           <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="addadmin.php">Add New Admin</a>
         </div>
@@ -56,8 +56,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
         <div class="m-5">
           <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="edit-bloodstock.php">Edit Blood Units</a>
         </div>
+        <div class="m-5">
+          <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="bloodstock.php">Blood Stock</a>
+        </div>
+        <div class="m-5">
+          <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="blood-request-list.php">Blood Requests</a>
+        </div>
       </div>
-      <div class="col-sm-9 col-md-6 col-lg-8 bg-success">
+      <div class="col-sm-6 col-md-6 col-lg-4 bg-success">
         <h1 class="text-center">Admin Profile</h1>
         <h2 class="text-center">logged-in as <?php echo $_SESSION['email'] ?></h2><hr>
       </div>
