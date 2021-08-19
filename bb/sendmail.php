@@ -2,7 +2,7 @@
 session_start();
 $showAlert = false;
 $error = false;
-$codeerror = false;
+$codeerror=false;
 
 $searchemail = true;
 $changepass = false;
@@ -27,13 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button3'])) {
         $changepass = true;
         $searchemail = false;
     } else {
-        $codeerror = true;
+        $codeerror=true;
         $changepass = false;
         $searchemail = false;
         $verifycode = true;
+
     }
 
-    unset($_POST);
+unset($_POST);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button2'])) {
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button2'])) {
             $showAlert = true;
         }
     }
-    unset($_POST);
+unset($_POST);
 }
 
 //search mail
@@ -89,8 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
             $body = "Use this code $code to reset your password.";
             $headers = "From: mz.shanto6997@gmail.com";
 
-            mail($email, $subject, $body, $headers);
-
+            if (mail($email, $subject, $body, $headers)) {
+                echo "Email successfully sent to $email.";
+            } else {
+                echo "Email sending failed...";
+            }
         } else {
             $error = "No user found !!";
         }
@@ -103,8 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
 <html lang="en">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Change Password</title>
@@ -141,11 +148,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
             </button>
         </div> ';
     }
+    ?>
 
+    <?php
     if ($changepass) {
         echo '<div class="container mt-5 p-5 ">
         <h1 class="text-center">Change Your Password</h1>
-        <form action="changepass.php" method="post">
+        <form action="sendmail.php" method="post">
             <hr>
             <div class="mb-3 col-md-6">
                 <label for="exampleInputPassword1" class="form-label">Enter New Password</label>
@@ -157,28 +166,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
     }
     if ($verifycode) {
         echo '<div class="container mt-5 p-5 ">
-        <h1 class="text-center">Code Verification</h1>
-        <hr>
-        <div class="mb-3 col-md-6 alert alert-warning" role="alert">
-            <strong>Verification code has sended to ' . $_SESSION['email'] . '.</strong>
-        </div>
-        <form action="changepass.php" method="post">
+        <h1 class="text-center">Enter Verification Code which we have send to your email : ' . $_SESSION['email'] . ' </h1>
+        <form action="sendmail.php" method="post">
+            <hr>
             <div class="mb-3 col-md-6">
-                <label for="exampleInputPassword1" class="form-label">Enter Verification Code</label>
+                <label for="exampleInputPassword1" class="form-label">Enter Verification Code Number</label>
                 <input type="number" class="form-control" name="number" id="number">
             </div>
             <button name="button3" type="submit" class="button3 py-3 mt-4 px-5 btn btn-outline-danger">Submit</button>
         </form>
         </div>';
     }
+    ?>
+
+
+    <?php
     if ($searchemail) {
         echo '<div class="container mt-5 p-5 ">
-        <h1 class="text-center">Search email address to set new password</h1>
-        <hr>
-        <div class="mb-3 col-md-6 alert alert-warning" role="alert">
-        <strong>We will send a verification code to your email.</strong>
-        </div>
-        <form action="changepass.php" method="post">
+        <h1 class="text-center">Search Email Address</h1>
+        <form action="sendmail.php" method="post">
+            <hr>
             <div class="mb-3 col-md-6">
                 <label for="exampleInputEmail1" class="form-label">Email Address</label>
                 <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
@@ -189,8 +196,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button1'])) {
     }
     ?>
 
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
 </body>
 
 </html>

@@ -36,11 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $mobilenumber = $_POST['mobilenumber'];
         $bloodgroup = $_POST['bloodgroup'];
-        $unit = $_POST['unit'];
         $storedate = $_POST['storedate'];
         $expirydate = $_POST['expirydate'];
         // Sql query to be executed
-        $sql = "UPDATE `bloodstock` SET `bagid`='$bagid',`donorname`='$donorname',`email`='$email',`mobilenumber`='$mobilenumber',`bloodgroup`='$bloodgroup',`unit`='$unit',`storedate`='$storedate',`expirydate`='$expirydate' WHERE `bloodstock`.`bagid` = '$sno'";
+        $sql = "UPDATE `bloodstock` SET `bagid`='$bagid',`donorname`='$donorname',`email`='$email',`mobilenumber`='$mobilenumber',`bloodgroup`='$bloodgroup',`storedate`='$storedate',`expirydate`='$expirydate' WHERE `bloodstock`.`bagid` = '$sno'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $update = true;
@@ -116,11 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <hr>
                     <div class="mb-3 col-md-6">
-                        <label for="exampleInputNumber1" class="form-label">Units</label>
-                        <input type="number" class="form-control" name="unit" id="unit">
-                    </div>
-                    <hr>
-                    <div class="mb-3 col-md-6">
                         <label for="exampleInputDate1" class="form-label">Storing Date</label>
                         <input type="date" class="form-control" name="storedate" id="storedate">
                     </div>
@@ -183,7 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <th scope="col">Email Address</th>
                         <th scope="col">Mobile Number</th>
                         <th scope="col">Blood Group</th>
-                        <th scope="col">Units</th>
                         <th scope="col">Storing Date</th>
                         <th scope="col">Expiry Date</th>
                         <th scope="col">Actions</th>
@@ -203,7 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>" . $row['email'] . "</td>
                             <td>" . $row['mobilenumber'] . "</td>
                             <td>" . $row['bloodgroup'] . "</td>
-                            <td>" . $row['unit'] . "</td>
                             <td>" . $row['storedate'] . "</td>
                             <td>" . $row['expirydate'] . "</td>
                             <td> <button class='edit btn btn-sm btn-danger' id=" . $row['bagid'] . ">Edit</button> <button class='delete btn btn-sm btn-danger' id=d" . $row['bagid'] . ">Delete</button>  </td>
@@ -237,11 +229,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-    $(document).ready(function() {
-      $('#table').DataTable();
-    });
-  </script>
-
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
     </script>
 
     <script>
@@ -256,20 +246,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 email.value = tr.getElementsByTagName("td")[2].innerText;
                 mobilenumber.value = tr.getElementsByTagName("td")[3].innerText;
                 bloodgroup.value = tr.getElementsByTagName("td")[4].innerText;
-                unit.value = tr.getElementsByTagName("td")[5].innerText;
-                storedate.value = tr.getElementsByTagName("td")[6].innerText;
-                expirydate.value = tr.getElementsByTagName("td")[7].innerText;
+                storedate.value = tr.getElementsByTagName("td")[5].innerText;
+                expirydate.value = tr.getElementsByTagName("td")[6].innerText;
 
-                console.log(bagid.value, donorname.value, email.value, mobilenumber.value, bloodgroup.value, unit.value, storedate.value, expirydate.value);
-
-                // bagid.value = tr.getElementsByTagName("td")[0].innerText;
-                // donorname.value = tr.getElementsByTagName("td")[1].innerText;
-                // email.value = tr.getElementsByTagName("td")[2].innerText;
-                // mobilenumber.value = tr.getElementsByTagName("td")[3].innerText;
-                // bloodgroup.value = tr.getElementsByTagName("td")[4].innerText;
-                // unit.value = tr.getElementsByTagName("td")[5].innerText;
-                // storedate.value = tr.getElementsByTagName("td")[6].innerText;
-                // expirydate.value = tr.getElementsByTagName("td")[7].innerText;
+                console.log(bagid.value, donorname.value, email.value, mobilenumber.value, bloodgroup.value, storedate.value, expirydate.value);
 
                 snoEdit.value = e.target.id;
                 console.log(e.target.id)

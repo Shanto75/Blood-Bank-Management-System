@@ -75,20 +75,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <div class="container mt-5 p-5 ">
     <h1 class="text-center">Admin LogIn</h1>
+    <hr>
     <form action="adminLogin.php" method="post">
-      <hr>
-      <div class="mb-3 col-md-6">
-        <label for="exampleInputEmail1" class="form-label">Email Address</label>
-        <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div class="col-md-4 mx-auto">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email Address</label>
+          <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-5">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="pass" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3 text-center alert alert-danger" role="alert">
+          Forgot your password? <a href="changepass.php" class="alert-link">Click hear to change.</a>
+        </div>
+        <button type="submit" class="py-3 mt-4 px-5 btn btn-outline-danger">Submit</button>
       </div>
-      <div class="mb-5 col-md-6">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" name="pass" id="exampleInputPassword1">
-      </div>
-      <div class="mb-3 col-md-4 text-center alert alert-danger" role="alert">
-        Forgot your password? <a href="changepass.php" class="alert-link">Click hear to change.</a>
-      </div>
-      <button type="submit" class="py-3 mt-4 px-5 btn btn-outline-danger">Submit</button>
     </form>
   </div>
 

@@ -1,8 +1,7 @@
-<?php 
-if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
-  $loggedin= true;
-}
-else{
+<?php
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+  $loggedin = true;
+} else {
   $loggedin = false;
 }
 echo '
@@ -18,8 +17,8 @@ echo '
         <li class="nav-item">
           <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="home.php">Home</a>
         </li> ';
-        if(!$loggedin){
-        echo '
+if (!$loggedin) {
+  echo '
         <li class="nav-item dropdown">
           <a class="m-3 nav-link dropdown-toggle btn btn-outline-danger" href="#" id="navbarScrollingDropdown"
            role="button" data-bs-toggle="dropdown" aria-expanded="false">Login</a>
@@ -30,13 +29,24 @@ echo '
         </li> 
         <li class="nav-item">
           <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="Signup.php">SignUp</a>
-        </li>';}
-        if($loggedin){
-          echo '<li class="nav-item">
+        </li>';
+}
+
+if ($loggedin) {
+  if (isset($_SESSION['acp'])) {
+    echo '<li class="nav-item">
+    <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="Admin.php">Admin Profile</a>
+    </li>';
+  } elseif (isset($_SESSION['ucp'])) {
+    echo '<li class="nav-item">
+    <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="userprofile.php">User Profile</a>
+  </li>';
+  }
+  echo '<li class="nav-item">
           <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="logout.php">Logout</a>
         </li>';
-        }
-      echo '</ul>
+}
+echo '</ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-danger" type="submit">Search</button>

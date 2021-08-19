@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
-    header("location: adminlogin.php");
-    exit;
+  header("location: home.php");
+  exit;
 }
 $servername = "localhost";
 $username = "root";
@@ -61,26 +61,26 @@ if (!$conn) {
               $Oplus = 0;
               $Ominus = 0;
 
-              $sql = "SELECT bloodgroup,unit FROM `bloodstock`";
+              $sql = "SELECT bloodgroup FROM `bloodstock`";
               $result = mysqli_query($conn, $sql);
               while ($row = mysqli_fetch_assoc($result)) {
 
                 if ($row['bloodgroup'] == 'B+') {
-                  $Bplus = $Bplus + $row['unit'];
+                  $Bplus = $Bplus + 1;
                 } elseif ($row['bloodgroup'] == 'B-') {
-                  $Bminus = $Bminus + $row['unit'];
+                  $Bminus = $Bminus + 1;
                 } elseif ($row['bloodgroup'] == 'A+') {
-                  $Aplus = $Aplus + $row['unit'];
+                  $Aplus = $Aplus + 1;
                 } elseif ($row['bloodgroup'] == 'A-') {
-                  $Aminus = $Aminus + $row['unit'];
+                  $Aminus = $Aminus + 1;
                 } elseif ($row['bloodgroup'] == 'AB+') {
-                  $ABplus = $ABplus + $row['unit'];
+                  $ABplus = $ABplus + 1;
                 } elseif ($row['bloodgroup'] == 'AB-') {
-                  $ABminus = $ABminus + $row['unit'];
+                  $ABminus = $ABminus + 1;
                 } elseif ($row['bloodgroup'] == 'O+') {
-                  $Oplus = $Oplus + $row['unit'];
+                  $Oplus = $Oplus + 1;
                 } elseif ($row['bloodgroup'] == 'O-') {
-                  $Ominus = $Ominus + $row['unit'];
+                  $Ominus = $Ominus + 1;
                 }
               }
 
@@ -122,7 +122,7 @@ if (!$conn) {
           </table>
         </div>
       </div>
-      
+
       <div class="col">
         <h5 class="text-center">Number of Donor :
           <?php
@@ -173,7 +173,7 @@ if (!$conn) {
                 } elseif ($row['bloodgroup'] == 'O+') {
                   $Oplus = $Oplus + 1;
                 } elseif ($row['bloodgroup'] == 'O-') {
-                  $Ominus = $Ominus +1;
+                  $Ominus = $Ominus + 1;
                 }
               }
 
@@ -217,8 +217,6 @@ if (!$conn) {
       </div>
     </div>
   </div>
-
-
 
   <!-- Optional JavaScript; choose one of the two! -->
   <!-- Option 1: Bootstrap Bundle with Popper -->
