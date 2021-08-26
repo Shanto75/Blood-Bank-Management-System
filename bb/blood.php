@@ -49,7 +49,6 @@ if (!$conn) {
             $bloodid = $_POST["bloodidEdit"];
             $bloodgroup = $_POST['bloodgroupEdit'];
             $price = $_POST['priceEdit'];
-            $quantity = $_POST['quantityEdit'];
             $info = $_POST['infoEdit'];
 
             $sql = "UPDATE `blood` SET `blood_id`='$bloodid', `bloodgroup`= '$bloodgroup',`price`= '$price',`info`= '$info' WHERE `blood_id` = '$sno'";

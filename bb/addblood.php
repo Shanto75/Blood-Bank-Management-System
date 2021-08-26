@@ -3,7 +3,7 @@ session_start();
 $showAlert = false;
 $showError = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $bagid = $_POST['bagid'];
+  // $bagid = $_POST['bagid'];
   $donorname = $_POST['donorname'];
   $email = $_POST['email'];
   $mobilenumber = $_POST['mobilenumber'];
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (!$conn) {
     die("Sorry we failed to connect: " . mysqli_connect_error());
   } else {
-    $sql = "INSERT INTO `bloodstock`(`bagid`, `donorname`, `email`, `mobilenumber`, `bloodgroup`, `storedate`, `expirydate`) VALUES  ('$bagid','$donorname','$email','$mobilenumber','$bloodgroup','$storedate','$expirydate')";
+    $sql = "INSERT INTO `bloodstock`(`donorname`, `email`, `mobilenumber`, `bloodgroup`, `storedate`, `expirydate`) VALUES  ('$donorname','$email','$mobilenumber','$bloodgroup','$storedate','$expirydate')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
       $showAlert = true;
@@ -75,11 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container mt-5 p-5 ">
     <h1 class="text-center">Add Blood Unit</h1>
     <form action="addblood.php" method="post" class="item-center">
-      <div class="mb-3 col-md-6">
+      <!-- <div class="mb-3 col-md-6">
         <label for="exampleInputName1" class="form-label">Bag Id</label>
         <input type="number" class="form-control" name="bagid" id="bagid">
       </div>
-      <hr>
+      <hr> -->
       <div class="mb-3 col-md-6">
         <label for="exampleInputEmail1" class="form-label">Donor Name</label>
         <input type="text" class="form-control" name="donorname" id="donorname" aria-describedby="emailHelp">

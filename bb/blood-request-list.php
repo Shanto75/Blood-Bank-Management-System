@@ -22,10 +22,36 @@ if (!$conn) {
 
     if (isset($_GET['delete'])) {
         $sno = $_GET['delete'];
+        echo $sno;
         $sql = "DELETE FROM `blood-request` WHERE `booking_id` = '$sno'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             $delete = true;
+        }
+    }
+
+    if (isset($_GET['pay'])) {
+        $sno = $_GET['pay'];
+        $sql = "UPDATE `blood-request` SET `status`= 'paid' WHERE `booking_id` = '$sno'";
+        $result = mysqli_query($conn, $sql);
+
+        $sql = "SELECT * FROM `blood-request` where booking_id = '$sno'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $bloodgroup = $row['blood_group'];
+        $email = $row['user_mail'];
+        $unit = $row['unit'];
+        $price = $row['price'];
+        $date = date("Y-m-d");
+
+        $sql = "INSERT INTO `bill`(`bloodgroup`, `email`,`unit`, `price`, `date`) VALUES  ('$bloodgroup','$email','$unit','$price','$date')";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            $update = true;
+        } else {
+            $updatefail = true;
+            // echo "<script>alert('Could not update the record successfully !!')</script>";
         }
     }
 
@@ -39,8 +65,9 @@ if (!$conn) {
             $unit = $_POST['quantity'];
             $reqdate = $_POST['reqdate'];
             $expirydate = $_POST['expdate'];
+            $payment = $_POST['pay'];
             // Sql query to be executed
-            $sql = "UPDATE `blood-request` SET `booking_id`= '$bookingid', `user_mail`= '$mail', `blood_group`= '$bloodgroup',`unit`= '$unit',`req_date`= '$reqdate', `req_expire_date`= '$expirydate' WHERE `booking_id` = '$sno'";
+            $sql = "UPDATE `blood-request` SET `booking_id`= '$bookingid', `user_mail`= '$mail', `blood_group`= '$bloodgroup',`unit`= '$unit',`req_date`= '$reqdate', `req_expire_date`= '$expirydate', `status`= '$payment' WHERE `booking_id` = '$sno'";
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 $update = true;
@@ -129,6 +156,13 @@ if (!$conn) {
                         <label for="exampleInputDate1" class="form-label">Request expire date</label>
                         <input type="date" class="form-control" name="expdate" id="expdate">
                     </div>
+                    <div class="mb-3 col-md-4">
+                        <label for="exampleInputDate1" class="form-label">Payment Status</label>
+                        <select name="pay" id="pay" class="form-select" aria-label="Default select example">
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">Unpaid</option>
+                        </select>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-danger">Save changes</button>
@@ -175,7 +209,7 @@ if (!$conn) {
         <h1 class="text-center">Blood Bag Requests</h1>
         <hr>
         <div class="m-5">
-            <table class="table table-dark table-striped table-hover text-center" id="table">
+            <table class="table table-dark text-center" id="table">
                 <thead>
                     <tr>
                         <th scope="col">Booking ID</th>
@@ -184,6 +218,7 @@ if (!$conn) {
                         <th scope="col">Unit</th>
                         <th scope="col">Request Date</th>
                         <th scope="col">Request Expire date</th>
+                        <th scope="col">Payment Status</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -199,8 +234,13 @@ if (!$conn) {
                         <td>" . $row['blood_group'] . "</td>
                         <td>" . $row['unit'] . "</td>
                         <td>" . $row['req_date'] . "</td>
-                        <td>" . $row['req_expire_date'] . "</td>
-                        <td><button class='edit btn btn-danger m-1' id=" . $row['booking_id'] . ">Edit</button> <button class='delete btn btn-danger m-1' id=d" . $row['booking_id'] . ">Delete Booking</button><a type='submit' name='submit' class=' btn btn-danger' href='bill-list.php?id=" . $row['booking_id'] . "'>Confirm Checkout</a></td>
+                        <td>" . $row['req_expire_date'] . "</td>"; ?>
+                    <?php if ($row['status'] == 'unpaid') {
+                            echo "<td class='bg-danger'>" . $row['status'] . "</td>";
+                        } elseif ($row['status'] == 'paid') {
+                            echo "<td class='bg-success'>" . $row['status'] . "</td>";
+                        }
+                        echo "<td><button class='edit btn btn-danger m-1' id=" . $row['booking_id'] . ">Edit</button> <button class='delete btn btn-danger m-1' id=d" . $row['booking_id'] . ">Delete Booking</button><a type='submit' name='submit' class='payment btn btn-danger' id=a" . $row['booking_id'] . ">Confirm Payment</a></td>
 
                         </tr>";
                     }
@@ -232,8 +272,9 @@ if (!$conn) {
                 quantity.value = tr.getElementsByTagName("td")[3].innerText;
                 reqdate.value = tr.getElementsByTagName("td")[4].innerText;
                 expdate.value = tr.getElementsByTagName("td")[5].innerText;
+                pay.value = tr.getElementsByTagName("td")[6].innerText;
 
-                console.log(bookingid.value, email.value, bloodgroup.value, quantity.value, reqdate.value, expdate.value);
+                console.log(bookingid.value, email.value, bloodgroup.value, quantity.value, reqdate.value, expdate.value, pay.value);
 
                 snoEdit.value = e.target.id;
                 console.log(e.target.id)
@@ -250,6 +291,23 @@ if (!$conn) {
                 if (confirm("Are you sure you want to cancel this booking ?")) {
                     console.log("yes");
                     window.location = `edit-booking.php?delete=${sno}`;
+                    // TODO: Create a form and use post request to submit a form
+                } else {
+                    console.log("no");
+                }
+            })
+        })
+
+        payment = document.getElementsByClassName('payment');
+        Array.from(payment).forEach((element) => {
+            element.addEventListener("click", (e) => {
+                console.log("edit");
+                sno = e.target.id.substr(1);
+                console.log(sno);
+
+                if (confirm("Are you sure you want to confurm this payment?")) {
+                    console.log("yes");
+                    window.location = `blood-request-list.php?pay=${sno}`;
                     // TODO: Create a form and use post request to submit a form
                 } else {
                     console.log("no");

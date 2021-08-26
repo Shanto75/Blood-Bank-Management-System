@@ -6,10 +6,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 }
 $showAlert = false;
 $showError = false;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_SESSION['email'];
     $bloodgroup = $_POST['bloodgroup'];
     $unit = $_POST['quantity'];
+    $price = $_POST['price'];
     $reqdate = date("Y-m-d");
     $expirydate = $_POST['date'];
 
@@ -25,12 +27,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$conn) {
         die("Sorry we failed to connect: " . mysqli_connect_error());
     } else {
-        $sql = "INSERT INTO `blood-request`(`user_mail`, `blood_group`, `unit`, `req_date`, `req_expire_date`) VALUES  ('$email','$bloodgroup','$unit','$reqdate','$expirydate')";
+
+        $sql = "SELECT COUNT(*) as cnt FROM bloodstock WHERE bloodgroup = '$bloodgroup'";
         $result = mysqli_query($conn, $sql);
-        if ($result) {
-            $showAlert = true;
+        $row = mysqli_fetch_assoc($result)['cnt'];
+
+        // $sql = "SELECT SUM(unit) FROM blood-request WHERE bloodgroup = '$bloodgroup'";
+        // $result = mysqli_query($conn, $sql);
+        // $row = mysqli_fetch_assoc($result)['cnt'];
+        // echo "$row";
+        if ($row < $unit) {
+            $showError = "Not Enough Blood Bag!!";
         } else {
-            $showError = "failed to Send Blood Request !!";
+            $sql = "INSERT INTO `blood-request`(`user_mail`, `blood_group`, `unit`, `price`, `req_date`, `req_expire_date`, `status`) VALUES  ('$email','$bloodgroup','$unit','$price','$reqdate','$expirydate', 'unpaid')";
+            $result = mysqli_query($conn, $sql);
+            if ($result) {
+                $showAlert = true;
+            } else {
+                $showError = "failed to Send Blood Request !!";
+            }
         }
     }
 }
@@ -107,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="mb-3 col-md-1">
                 <label for="exampleInputNumber1" class="form-label">Price in TK</label>
-                <input type="text" class="form-control" name="price" id="price" readonly>
+                <input type="number" class="form-control" name="price" id="price" readonly>
             </div>
             <hr>
             <div class="mb-3 col-md-4">
@@ -162,28 +177,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var tot_price = 0;
             var x = document.getElementById("quantity").value;
             if (val == 'B+') {
-                var tot_price = x*<?php echo $Bplus; ?>;
-            }
-            else if(val == 'B-') {
-                var tot_price = x*<?php echo $Bminus; ?>;
-            }
-            else if(val == 'A+') {
-                var tot_price = x*<?php echo $Aplus; ?>;
-            }
-            else if(val == 'A-') {
-                var tot_price = x*<?php echo $Aminus; ?>;
-            }
-            else if(val == 'AB+') {
-                var tot_price = x*<?php echo $ABplus; ?>;
-            }
-            else if(val == 'AB-') {
-                var tot_price =x* <?php echo $ABminus; ?>;
-            }
-            else if(val == 'O+') {
-                var tot_price = x*<?php echo $Oplus; ?>;
-            }
-            else if(val == 'O-') {
-                var tot_price = x*<?php echo $Ominus; ?>;
+                var tot_price = x * <?php echo $Bplus; ?>;
+            } else if (val == 'B-') {
+                var tot_price = x * <?php echo $Bminus; ?>;
+            } else if (val == 'A+') {
+                var tot_price = x * <?php echo $Aplus; ?>;
+            } else if (val == 'A-') {
+                var tot_price = x * <?php echo $Aminus; ?>;
+            } else if (val == 'AB+') {
+                var tot_price = x * <?php echo $ABplus; ?>;
+            } else if (val == 'AB-') {
+                var tot_price = x * <?php echo $ABminus; ?>;
+            } else if (val == 'O+') {
+                var tot_price = x * <?php echo $Oplus; ?>;
+            } else if (val == 'O-') {
+                var tot_price = x * <?php echo $Ominus; ?>;
             }
 
             /*display the result*/
@@ -194,28 +202,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function calculateAmount(val) {
             var x = document.getElementById("bloodgroup").value;
             if (x == 'B+') {
-                var tot_price = val*<?php echo $Bplus; ?>;
-            }
-            else if(x == 'B-') {
-                var tot_price = val*<?php echo $Bminus; ?>;
-            }
-            else if(x == 'A+') {
-                var tot_price = val*<?php echo $Aplus; ?>;
-            }
-            else if(x == 'A-') {
-                var tot_price = val*<?php echo $Aminus; ?>;
-            }
-            else if(x == 'AB+') {
-                var tot_price = val*<?php echo $ABplus; ?>;
-            }
-            else if(x == 'AB-') {
-                var tot_price =val* <?php echo $ABminus; ?>;
-            }
-            else if(x == 'O+') {
-                var tot_price = val*<?php echo $Oplus; ?>;
-            }
-            else if(x== 'O-') {
-                var tot_price = val*<?php echo $Ominus; ?>;
+                var tot_price = val * <?php echo $Bplus; ?>;
+            } else if (x == 'B-') {
+                var tot_price = val * <?php echo $Bminus; ?>;
+            } else if (x == 'A+') {
+                var tot_price = val * <?php echo $Aplus; ?>;
+            } else if (x == 'A-') {
+                var tot_price = val * <?php echo $Aminus; ?>;
+            } else if (x == 'AB+') {
+                var tot_price = val * <?php echo $ABplus; ?>;
+            } else if (x == 'AB-') {
+                var tot_price = val * <?php echo $ABminus; ?>;
+            } else if (x == 'O+') {
+                var tot_price = val * <?php echo $Oplus; ?>;
+            } else if (x == 'O-') {
+                var tot_price = val * <?php echo $Ominus; ?>;
             }
             /*display the result*/
             var divobj = document.getElementById('price');

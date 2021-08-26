@@ -32,44 +32,47 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
         <h1 class="text-center">Options</h1>
         <hr>
         <div class="col-md-8 mx-auto">
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="addadmin.php">Add New Admin</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="donor-list.php">Donor List</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="donor-reg.php">Add Donor</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="edit-donor-info.php">Edit Donor</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="signup.php">Add New User</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="userlist.php">User List</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="edit-user.php">Edit User List</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="addblood.php">Add Blood Units</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="edit-bloodstock.php">Edit Blood Units</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="bloodstock.php">Blood Stock</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="blood-request-list.php">Blood Requests</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="blood.php">Blood Info</a>
           </div>
-          <div class="m-5">
+          <div class="m-2">
             <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="payment.php">Payment</a>
+          </div>
+          <div class="m-2">
+            <a type="submit" name="submit" class=" btn btn-dark px-5 mx-5" href="bill-list.php">Bill List</a>
           </div>
         </div>
       </div>

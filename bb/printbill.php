@@ -13,7 +13,6 @@ $database = "bbms";
 $conn = mysqli_connect($servername, $username, $password, $database);
 // Die if connection was not successful
 
-
 ?>
 
 <!doctype html>
@@ -26,7 +25,7 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Home</title>
+    <title>Print Bill</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -52,7 +51,7 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 
                             // Create a connection
                             $conn = mysqli_connect($servername, $username, $password, $database);
-                            $id = $_SESSION['id'];
+                            $id = $_GET['id'];
                             
                             $sql = "SELECT * FROM `bill` where `receipt_no` = '$id'";
                             $result = mysqli_query($conn, $sql);
@@ -61,30 +60,25 @@ $conn = mysqli_connect($servername, $username, $password, $database);
 
                                     echo "
                             <tr>
-                                <td>Recipt Number</td>
-                                <td>" . $row['receipt_no']  . "</td>
+                                <td>Date</td>
+                                <td>" . $row['date'] . "</td>
                             </tr>
                             <tr>
-                                <td>Blood Bag Number</td>
-                                <td>" . $row['bagid']  . "</td>
+                                <td>Recipt Number</td>
+                                <td>" . $row['receipt_no']  . "</td>
                             </tr>
                             <tr>
                                 <td>blood group</td>
                                 <td>" . $row['bloodgroup'] . "</td>
                             </tr>
                             <tr>
-                                <td>Buyer Name</td>
-                                <td>" . $row['buyer_name'] . "</td>
-                            </tr>
-                            <tr>
                                 <td>Mail</td>
                                 <td>" . $row['email'] . "</td>
                             </tr>
                             <tr>
-                                <td>Mobile Number</td>
-                                <td>" . $row['mobile']  . "</td>
+                                <td>Number of blood bag</td>
+                                <td>" . $row['unit'] . "</td>
                             </tr>
-                            
                             <tr>
                                 <td>Total Price</td>
                                 <td>" . $row['price'] . "</td>
