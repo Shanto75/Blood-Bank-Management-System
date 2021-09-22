@@ -5,13 +5,7 @@ $_SESSION['acp'] = 'acp';
 $error = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Connecting to the Database
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $database = "bbms";
-
-  // Create a connection
-  $conn = mysqli_connect($servername, $username, $password, $database);
+  require 'db.php';
   // Die if connection was not successful
   if (!$conn) {
     die("Sorry we failed to connect: " . mysqli_connect_error());
@@ -76,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container mt-5 p-5 ">
     <h1 class="text-center">Admin LogIn</h1>
     <hr>
-    <form action="adminLogin.php" method="post">
+    <form action="adminlogin.php" method="post">
       <div class="col-md-4 mx-auto">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email Address</label>

@@ -28,14 +28,14 @@ if (!$loggedin) {
           </ul>
         </li> 
         <li class="nav-item">
-          <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="Signup.php">SignUp</a>
+          <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="signup.php">SignUp</a>
         </li>';
 }
 
 if ($loggedin) {
   if (isset($_SESSION['acp'])) {
     echo '<li class="nav-item">
-    <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="Admin.php">Admin Profile</a>
+    <a class="m-3 nav-link btn btn-outline-danger" aria-current="page" href="admin.php">Admin Profile</a>
     </li>';
   } elseif (isset($_SESSION['ucp'])) {
     echo '<li class="nav-item">

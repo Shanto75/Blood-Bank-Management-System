@@ -19,13 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     // Connecting to the Database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "bbms";
-
-    // Create a connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
+    require 'db.php';
     // Die if connection was not successful
     if (!$conn) {
         die("Sorry we failed to connect: " . mysqli_connect_error());
@@ -144,13 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "bbms";
-
-    // Create a connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
+    require 'db.php';
     $sql = "SELECT * FROM `blood`";
     $result = mysqli_query($conn, $sql);
     if ($result->num_rows > 0) {

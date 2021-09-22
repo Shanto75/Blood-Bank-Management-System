@@ -11,13 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
     // Connecting to the Database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "bbms";
+    require 'db.php';
+    // $servername = "localhost";
+    // $username = "root";
+    // $password = "";
+    // $database = "bbms";
 
-    // Create a connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
+    // // Create a connection
+    // $conn = mysqli_connect($servername, $username, $password, $database);
     // Die if connection was not successful
     if (!$conn) {
         die("Sorry we failed to connect: " . mysqli_connect_error());

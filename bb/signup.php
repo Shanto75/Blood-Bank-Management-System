@@ -8,13 +8,7 @@ $showError = false;
       $email = $_POST['email'];
       $pass = $_POST['pass'];
       // Connecting to the Database
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $database = "bbms";
-
-      // Create a connection
-      $conn = mysqli_connect($servername, $username, $password, $database);
+      require 'db.php';
       // Die if connection was not successful
       if (!$conn){
           die("Sorry we failed to connect: ". mysqli_connect_error());
@@ -52,7 +46,7 @@ $showError = false;
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Donor Regestration</title>
+    <title>Sign up</title>
     <link rel="stylesheet" href="style.css">
   </head>
 

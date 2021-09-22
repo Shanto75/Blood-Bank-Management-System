@@ -9,13 +9,7 @@ $changepass = false;
 $verifycode = false;
 
 // Connecting to the Database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bbms";
-
-// Create a connection
-$conn = mysqli_connect($servername, $username, $password, $database);
+require 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['button3'])) {
     // Die if connection was not successful

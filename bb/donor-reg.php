@@ -7,13 +7,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 }
 
 $Exists = false;
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bbms";
-
-// Create a connection
-$conn = mysqli_connect($servername, $username, $password, $database);
+require 'db.php';
 // Die if connection was not successful
 if (!$conn) {
   die("Sorry we failed to connect: " . mysqli_connect_error());
@@ -46,15 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $city = $_POST['city'];
   $gender = $_POST['gender'];
 
-  // Connecting to the Database
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $database = "bbms";
-
-  // Create a connection
-  $conn = mysqli_connect($servername, $username, $password, $database);
-  // Die if connection was not successful
+  require 'db.php';
+  
   if (!$conn) {
     die("Sorry we failed to connect: " . mysqli_connect_error());
   } else {
